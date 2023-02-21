@@ -1,0 +1,94 @@
+working on checksum 
+not tested to main program yet 
+
+#define maxServerLen     16
+#define maxCompanyLen    16
+#define maxDepartLen     14
+#define maxDeviceIDLen   11
+#define maxDeviceNoLen   5
+
+struct MQTT_Broker {
+  uint16_t port;
+  char server[maxServerLen];  //limit to maxServerLen character
+};
+
+struct MQTT_Topic {
+  char CompanyNm[maxCompanyLen];   //limit to maxCompanyLen character
+  char DepartNm[maxDepartLen];     //limit to maxDepartLen character
+  char DeviceID[maxDeviceIDLen];   //limit to maxDeviceIDLen character
+  char DeviceNo[maxDeviceNoLen];   //limit to maxDeviceNoLen character
+};
+struct MQTT_Configurations {
+  MQTT_Broker Broker;
+  MQTT_Topic Topic;
+};
+
+struct EEPROM_Configurations {
+  MQTT_Configurations Mqtt;
+  int16_t checksum;
+};
+
+union EEPROM_Uni {
+  //don't edit this union structure
+  //   struct EEPROM_Whole_Data Union;
+  struct EEPROM_Configurations Union;
+  uint16_t HalfWord[sizeof(EEPROM_Configurations) / 2]; // 16 bit is taken to use less storage  as the library utilises 2 Bytes of eeprom to store a single byte of data...
+};
+
+EEPROM_Configurations exam;
+EEPROM_Configurations copy;
+
+
+
+
+
+template< typename T > const T &put( int idx, const T &t, const T &des ) {
+
+  const uint16_t *ptr = (const uint16_t*) &t;  //read only
+  uint16_t *ptrr = (uint16_t*) &des;           //read or write
+
+  int16_t checksum = 0;
+
+  //for general structure without checksum
+  // for ( int count = sizeof(T) / 2  ; count ; --count, ++idx ) {
+
+  //for checksum
+  for ( int count = sizeof(T) / 2 - 1 ; count ; --count, ++idx ) {
+
+    //calculating checksum
+    checksum ^= *ptr;
+
+    //copying one structure to another 
+    *(ptrr++) = *ptr;
+    
+    //debug
+    Serial.print(idx);    Serial.print(":");
+    Serial.print(*ptr++); Serial.print(","); Serial.println(checksum,HEX);
+  }
+
+  //calculated checksum dump to checksum address
+  *ptrr  = checksum; 
+
+  return t;
+}
+
+
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+
+  exam.checksum = 0xf1;
+  exam.Mqtt.Broker.port = 8300;
+  strcpy(exam.Mqtt.Broker.server, "192.168.21.6");
+  put(100, exam, copy);
+
+  Serial.println(copy.Mqtt.Broker.port);
+  Serial.println(copy.Mqtt.Broker.server);
+  Serial.println(copy.checksum, HEX);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
