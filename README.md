@@ -5,7 +5,8 @@ Its a **Transparent_brigde**, which is use to send the bytes comming from networ
 ## Features
 
 some basic features for this module are . 
-- It can retain counter value if controller softreset for any reasons.
+- It can act as a integrated device from modbus modules which connect on rs-485 module end.
+- web configuration on same ip which asign to device and at port 7104 to configure and save parameter to flash for permanent memory
 
 
 ## PARAMETER
