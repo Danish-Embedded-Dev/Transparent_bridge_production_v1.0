@@ -7,6 +7,11 @@ Its a **Transparent_brigde**, which is use to send the bytes comming from networ
 some basic features for this module are . 
 - It can act as a integrated device from modbus modules which connect on rs-485 module end.
 - web configuration on same ip which asign to device and at port 7104 to configure and save parameter to flash for permanent memory
+- Support TCP/IP/MQTT Protocol(v1.0),  TCP/UDP (v_1.1) 
+- Support RS485 To 10/100M Ethernet Conversion, Serial Speed Upto 115200 bps ,default speed is 9600 setting 8N1  (static), configurable(v_1.1)
+- Support Industrial Temperature: -40 to +85˚ C
+- Size: ____x ___ x__ mm (L x W x H)
+
 
 
 ## PARAMETER
