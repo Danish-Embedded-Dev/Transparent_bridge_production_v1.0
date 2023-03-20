@@ -26,12 +26,6 @@ is **wordlenght** = 8 **parity** =none  **stop bits** = 1
 - Rs-485 module for physical interface
 - Ethernet module for Network interface
 
-## OUTPUT RELAY
-
-2 output relays are connected to the module
-- Output Relay_1 is connected to pin PB0
-- Output Relay_2 is connected to pin PB0
-
 ## STATUS LED
 
 Status led is connected to pin PC13
@@ -39,8 +33,7 @@ Status led is connected to pin PC13
 ## Communication Protocol
 
 This module has 2 commincation Protocol 
-- USB protocol for Serial Debugging
-- RS-485 Serial Interface for Modbus commands
+- USB protocol for Serial Debugging 
 
 ## Operating Voltage
 
